@@ -27,7 +27,12 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/admin-lte/plugins/jquery/jquery.min.js",
+              "./node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js",
+              "./node_modules/admin-lte/dist/js/adminlte.min.js",
+              "./node_modules/admin-lte/dist/js/demo.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -94,5 +99,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "1df59fb6-af14-4c12-87da-1bfa33f226b3"
   }
 }

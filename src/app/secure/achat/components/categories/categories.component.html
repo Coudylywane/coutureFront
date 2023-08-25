@@ -1,0 +1,184 @@
+<router-outlet>
+  <div class="card card-secondary">
+    <div class="card-header">
+      <h3 class="card-title">Categories</h3>
+
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="card-body" style="display: block;">
+      <div class="container">
+        <div class="row justify-content-end">
+          <div class="col-auto" style="margin-right: 10%;">
+            <div class="form-group">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1" (change)="toggleEditMode()">
+                <label class="custom-control-label" for="customSwitch1">{{ isEditMode ? 'Modification' : 'Ajout' }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!--       <form [formGroup]="categorieForm">
+        <div class="container">
+          <div class="row justify-content-end">
+            <div class="form-group col">
+              <label class="col-form-label" for="inputSuccess">Categorie</label>
+              <div class="row">
+                <div class="col-md-10">
+                  <input type="text" class="form-control" id="inputSuccess" placeholder="" formControlName="libelle"
+                  [disabled]="isEditMode || categorieForm.controls['libelle'].pristine">
+                </div>
+                <div class="col-auto">
+                  <a class="btn btn-danger btn-sm" [ngClass]="{'disabled': isEditMode}">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <button type="button" (click)="addCategorie()" class="btn btn-block btn-secondary"
+                [disabled]="isEditMode || categorieForm.controls['libelle'].pristine || categorieForm.controls['unite'].pristine">
+                Submit
+              </button>
+            </div>
+          </div>
+          <div class="row justify-content-end">
+            <div class="form-group col">
+              <label class="col-form-label" for="inputSuccess">Unite</label>
+              <div class="row">
+                <div class="col">
+                  <input type="text" class="form-control" id="inputSuccess" placeholder="Unite">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form> -->
+      <!-- ... Autres parties du formulaire -->
+
+<form [formGroup]="categorieForm">
+  <div class="container">
+    <div class="row justify-content-end">
+      <div class="form-group col">
+        <label class="col-form-label" for="inputSuccess">Categorie</label>
+        <div class="row">
+          <div class="col-md-10">
+            <input type="text" class="form-control" id="inputSuccess" placeholder="" formControlName="libelle"
+                   [disabled]="isEditMode || categorieForm.controls['libelle'].pristine">
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-danger btn-sm" [disabled]="selectedCategoryIds.length === 0" (click)="deleteSelectedCategories()">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>          
+        </div>
+      </div>
+      <div class="col-auto">
+        <button type="button" (click)="addCategorie()" class="btn btn-block btn-secondary"
+                [disabled]="isEditMode || categorieForm.controls['libelle'].pristine || categorieForm.controls['unite'].pristine">
+          Submit
+        </button>
+      </div>
+    </div>
+    <div class="row justify-content-end">
+      <div class="form-group col">
+        <label class="col-form-label" for="inputSuccess">Unite</label>
+        <div class="row">
+          <div class="col">
+            <input type="text" class="form-control" id="inputSuccess" placeholder="Unite"
+                   formControlName="unite">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <div *ngFor="let unite of selectedCategorieUnites">{{ unite.libelle }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</form>
+
+<!-- ... Autres parties du formulaire -->
+
+
+<!--
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th style="width: 10px">#</th>
+            <th>Libelle </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let categorie of categories">
+            <td>
+              <div class="custom-control custom-radio">
+                <input class="custom-control-input" type="radio" id="customRadio2" name="customRadio" checked="">
+                <label for="customRadio2" class="custom-control-label"></label>
+              </div>
+            </td>
+          <td>{{categorie?.libelle}}</td>
+          </tr>
+        </tbody>
+      </table> -->
+      <!-- ... Autres parties du formulaire -->
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th style="width: 10px">
+        <input type="checkbox" (change)="toggleAllCategoriesSelection($event)">
+      </th>
+      <th>Libelle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let categorie of categories">
+      <td>
+        <div class="custom-control custom-checkbox">
+          <input class="custom-control-input" type="checkbox" id="check{{ categorie.id }}"
+                 [checked]="isSelected(categorie.id)"
+                 *ngIf="categorie.id !== undefined" 
+                 (change)="toggleCategorySelection(categorie.id)">
+          <label class="custom-control-label" for="check{{ categorie.id }}"></label>
+        </div>
+      </td>
+      <td>{{ categorie?.libelle }}</td>
+    </tr>
+      
+  </tbody>
+</table>
+
+      <!-- <div class="card-footer clearfix">
+        <ul class="pagination pagination-sm m-0 float-right">
+          <li class="page-item"><a class="page-link" href="#">«</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">»</a></li>
+        </ul>
+      </div> -->
+
+      <div class="card-footer clearfix">
+        <ul class="pagination pagination-sm m-0 float-right">
+          <li class="page-item"><a class="page-link" href="#" (click)="changePage(1)">«</a></li>
+          <li class="page-item" *ngFor="let page of getPagesArray(totalPages)">
+            <a class="page-link" href="#" (click)="changePage(page)">{{ page }}</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#" (click)="changePage(totalPages)">»</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</router-outlet>
+
